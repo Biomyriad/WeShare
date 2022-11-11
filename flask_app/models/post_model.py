@@ -11,7 +11,7 @@ class Skeptic:
         self.user = data['user']
 
     @classmethod
-    def get_by__id(cls, id):
+    def get_by_id(cls, id):
         query = f"""
             SELECT *
             FROM posts
@@ -69,4 +69,4 @@ class Skeptic:
 
     @classmethod
     def run_query(cls, query, data=None):
-        return connectToMySQL('posts').query_db( query, data )
+        return connectToMySQL('weshare').query_db( query, data )
