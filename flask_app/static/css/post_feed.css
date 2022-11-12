@@ -1,3 +1,14 @@
+/* 
+    Scroll Bar
+    NavBar
+    Search Bar
+    Page Column
+    Post Panel
+    Add New Post
+    New Post Form
+ */
+
+/* Scroll Bar */
 body::-webkit-scrollbar {
     width: 0.8em;
 }
@@ -13,6 +24,7 @@ body::-webkit-scrollbar-thumb {
     background-image: linear-gradient(to right, #4466a2, #20314e);
 }
 
+/* Nav */
 nav {}
 
 .navbar {
@@ -41,7 +53,8 @@ nav {}
     display: inline-block;
     padding-top: 4px;
 }
-/* //////////////////////// */
+
+/* Search Bar */
 .searchbar {
     margin-right: 10px;
     /* background-color: #353b48; */
@@ -68,7 +81,6 @@ nav {}
     float: right;
     display: flex;
     justify-content: center;
-    /* align-items: center; */
     border-radius: 50%;
     color: #d9d9d9;
     text-decoration: none;
@@ -90,12 +102,14 @@ nav {}
     background: #233dff;
     color: #d9d9d9;
 }
-/* ///////////////////////////////// */
+
+/* Page Column */
 .feed-column {
     width: 500px;
     padding-top: 40px;
 }
 
+/* Post Panel */
 .post-container {
     /* height: 600px; */
     border: 2px solid #4466a2;
@@ -105,7 +119,7 @@ nav {}
     width: 350px;
     margin: 0 auto;
     margin-bottom: 30px;
-    box-shadow: 0px 6px 13px 1px rgba(42, 64, 100, 0.56);
+    box-shadow: 0px 6px 13px 1px #2a40648f;
 }
 
 .post-background {
@@ -147,7 +161,6 @@ nav {}
     width: 320px;
     display: block;
     margin: 0 auto;
-
 }
 
 .post-description {
@@ -158,3 +171,125 @@ nav {}
     font-size: 12px;
 }
 
+/* Add New Post Button */
+.new-post {
+    bottom: 50px;
+    right: 30%;
+    position: fixed;
+
+    display: flex;
+    flex-direction: column-reverse;
+    /* height: 65px; */
+    width: 65px;
+}
+
+.new-post-button {
+    width: 65px;
+    background-color: transparent;
+}
+
+.new-post-button>svg {
+    height: 65px;
+    width: 65px;
+    border-radius: 100%;
+    box-shadow: 6px 6px 5px 0px rgba(0,0,0,0.75);
+    color: #4466a2;
+    transition: color 0.3s linear;
+}
+
+.new-post-button:hover>svg {
+    color: #233dff;
+    transition: color 0.3s linear;
+}
+
+.new-post-button:active:hover>svg {
+    color: #353b48;
+    transition: color 0.3s linear;
+}
+
+.new-post-form.hide {
+    height: 0px;
+    width: 0px;
+    box-shadow: none;
+    border: none;
+    filter: blur(5px);
+    left: 15px;
+    top: 30px;
+    transition: height 0.25s linear, width 0.25s linear, filter 0.5s linear, left 0.25s linear, top 0.25s linear;
+}
+
+/* New Post Form */
+.new-post-form {
+    top: 25px;
+    left: -360px;
+    height:241px;
+    position: relative;
+    overflow: hidden;
+
+    /* align-self: flex-start; */
+    transition: height 0.25s linear, width 0.25s linear, filter 0.4s linear, left 0.25s linear, top 0.25s linear;
+}
+
+.file-select {
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-top: 8px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.file-select-button {
+    border-top-right-radius: 0px !important;
+    border-bottom-right-radius: 0px !important;
+}
+
+.file-select-input {
+    padding-left: 5px;
+    padding-right: 5px;
+    width: 100%;
+    color: #d9d9d9;
+    background-color: #353b48;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.new-post-description {
+    width: 100%;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.new-post-description-input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 4px;
+    background-color: #353b48;
+    color: #d9d9d9;
+}
+
+.new-post-form-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 5px 0px;
+}
+
+.form-button {
+    background-color: #4466a2;
+    color: #d9d9d9;
+    padding-left: 6px;
+    padding-right: 8px;
+    border-radius: 4px;
+    transition: background-color 0.15s linear;
+}
+
+.form-button:hover {
+    background-color: #233dff;
+    transition: background-color 0.15s linear;
+}
+
+.form-button:active:hover {
+    background-color: #353b48;
+    transition: background-color 0.15s linear;
+}
