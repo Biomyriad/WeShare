@@ -1,0 +1,23 @@
+{% block post %}
+
+    <div class="post-container">
+        <div class="post-background">
+            <div class="post-heading">
+                <div>
+                    <div class="post-portrait-background text-center">
+                        <i class="bi bi-person-fill mx-auto" style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
+                    </div>
+                    <a href="http://" style="display: inline-block">{{post.user.username}}</a>                            
+                </div>
+                <p>{{post.created_at.strftime('%d %b, %Y %I:%M %p')}}</p>
+            </div>
+            <div class="post-image-container">
+                <img class="post-image"
+                    src="{{post.image_path}}"
+                    alt="">
+            </div>
+            <p class="post-description">{{post.description}}</p>
+        </div>
+    </div>
+    
+{% endblock %}

@@ -61,35 +61,17 @@
 
     </nav>
 
+
+
    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
     <div class="container">
 
-        <div class="feed-column mx-auto">
+        <div class="feed-column mx-auto" id="post_feed">
  
-    <!--        Sample Post         -->
         {% for post in userPosts %}
-            <div class="post-container">
-                <div class="post-background">
-                    <div class="post-heading">
-                        <div>
-                            <div class="post-portrait-background text-center">
-                                <i class="bi bi-person-fill mx-auto" style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
-                            </div>
-                            <a href="http://" style="display: inline-block">{{post.user.username}}</a>                            
-                        </div>
-                        <p>{{post.created_at.strftime('%d %b, %Y %I:%M %p')}}</p>
-                    </div>
-                    <div class="post-image-container">
-                        <img class="post-image"
-                            src="{{post.image_path}}"
-                            alt="">
-                    </div>
-                    <p class="post-description">{{post.description}}</p>
-                </div>
-            </div>
+            {% include "partials/post.html" %}
         {% endfor %} 
-            <!--      END of Sample Post -->
 
         </div>
         <!-- End of Page feed-column -->
@@ -102,17 +84,21 @@
             </button>
             <div class="new-post-form post-container hide" id="newpostform">
                 <div class="post-background">
-                    <form action="">
+                    <form id="new-post-form">
+                        <div class="post-image-container" id="new-post-img-container" >
+                            <!-- <img class="post-image" id="new-post-img" alt=""> -->
+                        </div>
                         <div class="file-select">
-                            <button class="file-select-button form-button" id="newPostPickFile">Select</button>
-                            <input class="file-select-input" type="text" placeholder="File Path..." id="newPostFilePath" readonly>
+                            <label class="file-select-button form-button" for="upload">Select</label>
+                            <input type="file" name="file" id="upload" style="opacity: 0; position: absolute; z-index: -1;" onchange="readURL(this)"/>
+                            <input class="file-select-input" type="text" name="file_name_url" id="newPostFileName" placeholder="File Name..." >
                         </div>
                         <div class="new-post-description">
-                            <textarea class="new-post-description-input" placeholder="Description..." id="newPostDescription" cols="30" rows="5"></textarea>
+                            <textarea class="new-post-description-input" placeholder="Description..." name="description" id="newPostDescription" cols="30" rows="5"></textarea>
                         </div>
                         <div class="new-post-form-buttons">
-                            <button class="new-form-submit form-button" type="submit">Post</button>
-                            <button class="new-form-cancel form-button" type="reset" onclick="document.getElementById('newpostform').classList.toggle('hide')">Cancel</button>
+                            <button class="new-form-submit form-button" onclick="event.preventDefault(); newPostUpload();">Post</button>
+                            <button class="new-form-cancel form-button" type="reset" onclick="newPostFormClear()">Cancel</button>
                         </div>
                     </form>
             
@@ -123,6 +109,69 @@
     </div>
     <!-- End of Page container -->
 
+
+<script>
+    function readURL(input) {
+        var url = input.value;
+        var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
+        if (input.files && input.files[0]&& (ext == "gif" || ext == "png" || ext == "jpeg" || ext == "jpg")) {
+            var reader = new FileReader();
+
+            reader.onload = function (e) {
+                //document.getElementById("img").src = e.target.result;
+                let img = document.createElement('img');
+                img.id = 'new-post-img';
+                img.classList.add("post-image")
+                img.src = e.target.result;
+                img.setAttribute(
+                    'style',
+                    'margin-top: 8px; margin-bottom: -4px;',
+                );
+                
+                img.addEventListener("load", () => {
+                    var root = document.querySelector(':root');
+                    root.style.setProperty('--new-post-upload-image-height', (document.getElementById("new-post-img").height + 6)+ "px");
+                });
+                
+                document.getElementById('new-post-img-container').replaceChildren(img);
+            }
+
+            reader.readAsDataURL(input.files[0]);
+            document.getElementById('newPostFileName').value = event.target.files[0].name;
+        }else{
+            //document.getElementById("img").src = '/assets/no_preview.png';
+        }
+    }
+
+    function newPostFormClear() {
+        document.getElementById("new-post-form").reset()
+        document.querySelector(':root').style.setProperty('--new-post-upload-image-height', "0px");
+        var img = document.getElementById('new-post-img')
+        if(img) img.remove();
+        document.getElementById('newpostform').classList.toggle('hide');
+    }
+
+    async function newPostUpload() {
+        const fileInput = document.querySelector('#upload') ;
+        const formData = new FormData();
+        formData.append('file', fileInput.files[0]);
+        formData.append('description', document.getElementById("newPostDescription").value);
+        formData.append('file_name_url', document.getElementById("newPostFileName").value);
+        
+        const options = {
+            method: 'POST',
+            body: formData,
+        };
+        
+        fetch('/uploader', options)
+        .then(async (res) => {
+            resData = await res.json();
+            document.getElementById("post_feed").insertAdjacentHTML("afterbegin", resData.newPostElem)
+            newPostFormClear()
+        })
+    }
+
+</script>
 </body>
 
 </html>

@@ -8,6 +8,11 @@
     New Post Form
  */
 
+/* root */
+:root {
+    --new-post-upload-image-height: 0px;
+}
+
 /* Scroll Bar */
 body::-webkit-scrollbar {
     width: 0.8em;
@@ -231,7 +236,7 @@ nav {}
 .new-post-form {
     top: 25px;
     left: -360px;
-    height:241px;
+    height: calc(241px + var(--new-post-upload-image-height));
     position: relative;
     overflow: hidden;
 
