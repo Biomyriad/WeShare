@@ -14,8 +14,8 @@ from flask import render_template, request, redirect, url_for, session, flash
 
 @app.route('/')
 def route_test():
-    #return "hello" 
-    return render_template("pages/post_feed.html")  
+    return "hello" 
+    #return render_template("pages/post_feed.html")  
 
 
 # # # # # # # # # # #

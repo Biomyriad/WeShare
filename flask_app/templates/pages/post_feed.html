@@ -61,104 +61,35 @@
 
     </nav>
 
-    <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
-    <!--        Sample Post         -->
+   <!-- /////////////////////////////////////////////////////////////////////////////////////////////////// -->
 
     <div class="container">
 
         <div class="feed-column mx-auto">
-
+ 
+    <!--        Sample Post         -->
+        {% for post in userPosts %}
             <div class="post-container">
                 <div class="post-background">
-
                     <div class="post-heading">
-                        <div class="post-portrait-background text-center">
-                            <i class="bi bi-person-fill mx-auto"
-                                style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
+                        <div>
+                            <div class="post-portrait-background text-center">
+                                <i class="bi bi-person-fill mx-auto" style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
+                            </div>
+                            <a href="http://" style="display: inline-block">{{post.user.username}}</a>                            
                         </div>
-
-                        <a href="http://" style="display: inline-block">Jane Doe</a>
+                        <p>{{post.created_at.strftime('%d %b, %Y %I:%M %p')}}</p>
                     </div>
-
                     <div class="post-image-container">
                         <img class="post-image"
-                            src="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/cat-217679.jpg?h=c4ed616d&itok=3qHaqQ56"
+                            src="{{post.image_path}}"
                             alt="">
                     </div>
-
-                    <p class="post-description">This is a cute picture of my kitty! isn't she sooooo cute. She really
-                        loves to cuddle! (with my keyboard...)</p>
-
+                    <p class="post-description">{{post.description}}</p>
                 </div>
             </div>
-
+        {% endfor %} 
             <!--      END of Sample Post -->
-
-            <!-- ////////////////////////////////////////////////////////////////////////////////////////////////// -->
-            <!-- S -->
-            <div class="post-container">
-                <div class="post-background">
-                    <div class="post-heading">
-                        <div class="post-portrait-background text-center">
-                            <i class="bi bi-person-fill mx-auto"
-                                style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
-                        </div>
-                        <a href="http://" style="display: inline-block">Jane Doe</a>
-                    </div>
-                    <div class="post-image-container">
-                        <img class="post-image"
-                            src="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/cat-217679.jpg?h=c4ed616d&itok=3qHaqQ56"
-                            alt="">
-                    </div>
-                    <p class="post-description">Lorem ipsum dolor sit amet consectetur adipisicing elit. In adipisci,
-                        maiores dignissimos a placeat vel obcaecati neque voluptatibus! Soluta quae ad corporis autem,
-                        atque consequatur odio placeat rem quaerat cum! Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Assumenda dolorem exercitationem iusto ex sint repudiandae eos totam numquam
-                        temporibus facilis incidunt accusantium ad excepturi dicta quod aperiam, nihil illum eligendi?
-                    </p>
-                </div>
-            </div>
-            <!-- E -->
-            <!-- S -->
-            <div class="post-container">
-                <div class="post-background">
-                    <div class="post-heading">
-                        <div class="post-portrait-background text-center">
-                            <i class="bi bi-person-fill mx-auto"
-                                style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
-                        </div>
-                        <a href="http://" style="display: inline-block">Jane Doe</a>
-                    </div>
-                    <div class="post-image-container">
-                        <img class="post-image"
-                            src="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/cat-217679.jpg?h=c4ed616d&itok=3qHaqQ56"
-                            alt="">
-                    </div>
-                    <p class="post-description">This is a cute picture of my kitty! isn't she sooooo cute. She really
-                        loves to cuddle! (with my keyboard...)</p>
-                </div>
-            </div>
-            <!-- E -->
-            <!-- S -->
-            <div class="post-container">
-                <div class="post-background">
-                    <div class="post-heading">
-                        <div class="post-portrait-background text-center">
-                            <i class="bi bi-person-fill mx-auto"
-                                style="font-size: 25px; color: cornflowerblue; line-height: 10px;"></i>
-                        </div>
-                        <a href="http://" style="display: inline-block">Jane Doe</a>
-                    </div>
-                    <div class="post-image-container">
-                        <img class="post-image"
-                            src="https://www.humanesociety.org/sites/default/files/styles/1240x698/public/2018/06/cat-217679.jpg?h=c4ed616d&itok=3qHaqQ56"
-                            alt="">
-                    </div>
-                    <p class="post-description">This is a cute picture of my kitty! isn't she sooooo cute. She really
-                        loves to cuddle! (with my keyboard...)</p>
-                </div>
-            </div>
-            <!-- E -->
 
         </div>
         <!-- End of Page feed-column -->

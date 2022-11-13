@@ -133,7 +133,16 @@ nav {}
 .post-heading {
     margin-bottom: 8px;
     padding-left: 1px;
-    padding-right: 0px;
+    padding-right: 13px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.post-heading p {
+    font-size: 13px;
+    color: #d9d9d9;
+    margin-bottom: 0px;
+    padding-top: 3px;
 }
 
 .post-heading a {
