@@ -18,15 +18,28 @@ class UserPosts:
         query = f"""
             SELECT *
             FROM posts
+            JOIN users ON users.id = posts.user_id
             WHERE posts.id=%(id)s;
         """
         data = { "id": id }
         results = cls.run_query(query, data)
 
-        Posts = []
-        for post in results:
-            Posts.append( cls(post) )
-        return Posts
+        if not len(results) > 0:
+            return False
+
+        post = cls(results[0])
+        post.user = User({
+                "id": results[0]['users.id'],
+                "first_name": results[0]['first_name'],
+                "last_name": results[0]['last_name'],
+                "username": results[0]['username'],
+                "email": results[0]['email'],
+                "password": "",
+                "created_at": results[0]['users.created_at'],
+                "updated_at": results[0]['users.updated_at']
+            })
+
+        return post
 
     @classmethod
     def get_all(cls):
@@ -41,7 +54,7 @@ class UserPosts:
         # if not len(results) > 0:
         #     return False
 
-        Posts = []
+        posts = []
         for post in results:
             item = cls(post)
             item.user = User({
@@ -54,15 +67,15 @@ class UserPosts:
                 "created_at": post['users.created_at'],
                 "updated_at": post['users.updated_at']
             })
-            Posts.append( item )
+            posts.append( item )
             
-        return Posts          
+        return posts          
 
     @classmethod
     def save(cls, data ):
         query = f"""
-            INSERT INTO posts ( description, image_path, created_at, updated_at) 
-            VALUES ( %(description)s, %(image_path)s, NOW(), NOW() );
+            INSERT INTO posts ( user_id, description, image_path, created_at, updated_at) 
+            VALUES ( %(user_id)s, %(description)s, %(image_path)s, NOW(), NOW() );
         """
         return cls.run_query(query, data)
 
