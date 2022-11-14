@@ -51,8 +51,8 @@ class UserPosts:
         """
         results = cls.run_query(query)
 
-        # if not len(results) > 0:
-        #     return False
+        if not len(results) > 0:
+            return []
 
         posts = []
         for post in results:

@@ -96,6 +96,7 @@
                         <div class="new-post-description">
                             <textarea class="new-post-description-input" placeholder="Description..." name="description" id="newPostDescription" cols="30" rows="5"></textarea>
                         </div>
+                        <!-- <label class="new-post-form-errors form-input" id="newPostFormErrors" onchange="console.log('hello')"></label> -->
                         <div class="new-post-form-buttons">
                             <button class="new-form-submit form-button" onclick="event.preventDefault(); newPostUpload();">Post</button>
                             <button class="new-form-cancel form-button" type="reset" onclick="newPostFormClear()">Cancel</button>
@@ -163,11 +164,25 @@
             body: formData,
         };
         
-        fetch('/uploader', options)
+        await fetch('/uploader', options)
         .then(async (res) => {
-            resData = await res.json();
-            document.getElementById("post_feed").insertAdjacentHTML("afterbegin", resData.newPostElem)
-            newPostFormClear()
+            if (res.status === 200) {
+                resData = await res.json();
+                console.log(resData)
+                document.getElementById("post_feed").insertAdjacentHTML("afterbegin", resData.newPostElem)
+                newPostFormClear()                
+            } else if (res.status === 400 || res.status === 415) {
+                resData = await res.json();
+                console.log(Object.values(resData.errorMessages)[0])
+                document.getElementById("newPostFormErrors").innerText = Object.values(resData.errorMessages)[0]
+                return
+            }
+ //document.querySelector(':root').style.setProperty('--new-post-upload-image-height', "px");
+        })
+        .catch(async (err) => {
+            if (!err?.response) {
+                document.getElementById("newPostFormErrors").innerText = 'No Server Response'
+            } 
         })
     }
 

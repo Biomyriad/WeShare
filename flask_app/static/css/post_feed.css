@@ -1,5 +1,7 @@
 /* 
+    Root Vars
     Scroll Bar
+    Standard Button Template
     NavBar
     Search Bar
     Page Column
@@ -11,6 +13,7 @@
 /* root */
 :root {
     --new-post-upload-image-height: 0px;
+    --new-post-error-message-height: 0px;
 }
 
 /* Scroll Bar */
@@ -27,6 +30,34 @@ body::-webkit-scrollbar-thumb {
     background-color: #4466a2;
     border-radius: 15px;
     background-image: linear-gradient(to right, #4466a2, #20314e);
+}
+
+/* Standard Button Template */
+.form-button {
+    background-color: #4466a2;
+    color: #d9d9d9;
+    padding-left: 6px;
+    padding-right: 8px;
+    border-radius: 4px;
+    transition: background-color 0.15s linear;
+}
+
+.form-button:hover {
+    background-color: #233dff;
+    transition: background-color 0.15s linear;
+}
+
+.form-button:active:hover {
+    background-color: #353b48;
+    transition: background-color 0.15s linear;
+}
+
+.form-input {
+    padding-left: 5px;
+    padding-right: 5px;
+    color: #d9d9d9;
+    background-color: #353b48;
+    border-radius: 4px;
 }
 
 /* Nav */
@@ -236,7 +267,7 @@ nav {}
 .new-post-form {
     top: 25px;
     left: -360px;
-    height: calc(241px + var(--new-post-upload-image-height));
+    height: calc(241px + var(--new-post-upload-image-height) + var(--new-post-error-message-height));
     position: relative;
     overflow: hidden;
 
@@ -289,21 +320,10 @@ nav {}
     padding: 5px 0px;
 }
 
-.form-button {
-    background-color: #4466a2;
-    color: #d9d9d9;
-    padding-left: 6px;
-    padding-right: 8px;
-    border-radius: 4px;
-    transition: background-color 0.15s linear;
+.new-post-form-errors {
+    height: var(--new-post-error-message-height + 10px);
+
+    color:rgb(255, 0, 0);
+    margin: 0px 10px;
 }
 
-.form-button:hover {
-    background-color: #233dff;
-    transition: background-color 0.15s linear;
-}
-
-.form-button:active:hover {
-    background-color: #353b48;
-    transition: background-color 0.15s linear;
-}

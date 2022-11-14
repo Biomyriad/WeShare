@@ -25,19 +25,21 @@ def upload_file():
     print(request.form['description'])
     print(request.form['file_name_url'])
 
+    if not request.form['description']:
+        return {"errorMessages": {"description": "Must provide a description."}} , 400 #400 Bad Request
+
     if request.method == 'POST':
-        # check if the post request has the file part
         if 'file' not in request.files:
             flash('No file part')
             print("-- no file part")
-            return 415 #UNSUPPORTED_MEDIA_TYPE   #redirect(request.url)
+            return {"errorMessages": {"file": "No file Selected"}} , 415 #UNSUPPORTED_MEDIA_TYPE
         file = request.files['file']
         # If the user does not select a file, the browser submits an
         # empty file without a filename.
         if file.filename == '':
             flash('No selected file')
             print("-- No selected file")
-            return 415 #UNSUPPORTED_MEDIA_TYPE  #redirect(request.url)
+            return {"errorMessages": {"file": "No selected file"}}, 415 #UNSUPPORTED_MEDIA_TYPE
         if file and allowed_file(file.filename):
             filename = secure_filename(file.filename)
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
