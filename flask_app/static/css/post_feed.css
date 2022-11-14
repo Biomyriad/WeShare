@@ -267,7 +267,7 @@ nav {}
 .new-post-form {
     top: 25px;
     left: -360px;
-    height: calc(241px + var(--new-post-upload-image-height) + var(--new-post-error-message-height));
+    height: calc(248px + var(--new-post-upload-image-height) + var(--new-post-error-message-height));
     position: relative;
     overflow: hidden;
 
@@ -317,13 +317,15 @@ nav {}
     display: flex;
     justify-content: center;
     gap: 15px;
-    padding: 5px 0px;
+    padding: 0px 0px;
+    margin: 5px 0px 8px;
 }
 
 .new-post-form-errors {
-    height: var(--new-post-error-message-height + 10px);
+    height: var(--new-post-error-message-height + "px");
 
     color:rgb(255, 0, 0);
-    margin: 0px 10px;
+    margin: 0px 10px 10px;
+
 }
 

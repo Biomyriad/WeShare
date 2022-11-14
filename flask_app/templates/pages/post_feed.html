@@ -96,7 +96,7 @@
                         <div class="new-post-description">
                             <textarea class="new-post-description-input" placeholder="Description..." name="description" id="newPostDescription" cols="30" rows="5"></textarea>
                         </div>
-                        <!-- <label class="new-post-form-errors form-input" id="newPostFormErrors" onchange="console.log('hello')"></label> -->
+                        <p class="new-post-form-errors form-input" id="newPostFormErrors"></p>
                         <div class="new-post-form-buttons">
                             <button class="new-form-submit form-button" onclick="event.preventDefault(); newPostUpload();">Post</button>
                             <button class="new-form-cancel form-button" type="reset" onclick="newPostFormClear()">Cancel</button>
@@ -112,6 +112,12 @@
 
 
 <script>
+    // Set event listener on new post error message field to update css var
+    document.getElementById('newPostFormErrors').addEventListener("DOMSubtreeModified", (event) => {
+        document.querySelector(':root').style.setProperty('--new-post-error-message-height', event.target.clientHeight + "px");
+        console.log(event.target.clientHeight) 
+    }, false);
+
     function readURL(input) {
         var url = input.value;
         var ext = url.substring(url.lastIndexOf('.') + 1).toLowerCase();
@@ -149,6 +155,7 @@
         document.querySelector(':root').style.setProperty('--new-post-upload-image-height', "0px");
         var img = document.getElementById('new-post-img')
         if(img) img.remove();
+        document.getElementById("newPostFormErrors").innerText = ""
         document.getElementById('newpostform').classList.toggle('hide');
     }
 
@@ -168,16 +175,14 @@
         .then(async (res) => {
             if (res.status === 200) {
                 resData = await res.json();
-                console.log(resData)
                 document.getElementById("post_feed").insertAdjacentHTML("afterbegin", resData.newPostElem)
                 newPostFormClear()                
             } else if (res.status === 400 || res.status === 415) {
                 resData = await res.json();
-                console.log(Object.values(resData.errorMessages)[0])
                 document.getElementById("newPostFormErrors").innerText = Object.values(resData.errorMessages)[0]
                 return
             }
- //document.querySelector(':root').style.setProperty('--new-post-upload-image-height', "px");
+
         })
         .catch(async (err) => {
             if (!err?.response) {
