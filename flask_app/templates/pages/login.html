@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/logreg.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+    <title>Document</title>
+</head>
+
+<body >
+    <div class="background-radial-gradient " id="background">
+        <div class="container px-4 py-5 px-md-5 text-center text-lg-start " >
+            <div class="row gx-lg-5 align-items-center mb-5" id="container">
+                <div class="col-lg-6 mb-5 mb-lg-0" style="z-index: 10">
+                    <div class="d-flex justify-content-center">
+                        <img src="./static/images/WeShare (2).svg">
+                    </div>
+                </div>
+
+                <div class="col-lg-6 mb-5 mb-lg-0 position-relative">
+                    <div id="radius-shape-1" class="position-absolute rounded-circle shadow-5-strong"></div>
+                    <div id="radius-shape-2" class="position-absolute shadow-5-strong"></div>
+
+                    <div class="card bg-glass">
+                        <div class="card-body px-4 py-5 px-md-5">
+                            <form action="/login" method="post">
+                                <!-- Email input -->
+                                <div class="form-outline mb-4">
+                                    <input type="email" class="form-control" name="email"/>
+                                    <label class="form-label">Email Adress</label>
+                                </div>
+                            <!-- Password input -->
+                                <div class="form-outline mb-4">
+                                    <input type="password" class="form-control" name="password"/>
+                                    <label class="form-label">Password</label>
+                                </div>
+
+                                <div class="d-grid gap-2 col-6 mx-auto">
+                                    <button class="btn btn-primary btn-block" type="submit" name="action" value="login">
+                                        <span class="font-weight-bold">Log In</span>
+                                    </button>
+                                    <p class="text-muted text-center w-100 font-weight-bold">Don't have an account? 
+                                        <a class="text-primary ml-2" style="cursor: pointer;" onclick="document.getElementById('regPanel').hidden = false; document.getElementById('background').style.filter = 'blur(2px)';">Register</a>
+                                    </p>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="card bg-glass reg-panel" id="regPanel">
+        <div class="card-body px-4 py-5 px-md-5">
+            <form action="/login" method="post">
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <input type="text" class="form-control" name="first_name"/>
+                            <label class="form-label">First name</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="form-outline">
+                            <input type="text" class="form-control" name="last_name"/>
+                            <label class="form-label">Last name</label>
+                        </div>
+                    </div>
+                </div>
+    
+                <!-- Email input -->
+                <div class="form-outline mb-4">
+                    <input type="email" class="form-control" name="email"/>
+                    <label class="form-label">Email Adress</label>
+                </div>
+    
+                <!-- Username input -->
+                <div class="form-outline mb-4">
+                    <input type="username" class="form-control" name="username"/>
+                    <label class="form-label">User Name</label>
+                </div>
+    
+    
+                <!-- Password input -->
+                <div class="form-outline mb-4">
+                    <input type="password" class="form-control" name="password"/>
+                    <label class="form-label">Password</label>
+                </div>
+
+                <div class="form-outline mb-4">
+                    <input type="password" class="form-control" name="confirm"/>
+                    <label class="form-label">Confirm Password</label>
+                </div>
+    
+                <!-- Already Registered -->
+                <div class="d-grid gap-2 col-6 mx-auto">
+                    <button class="btn btn-primary btn-block" type="submit" name="action" value="register">
+                        <span class="font-weight-bold">Register</span>
+                    </button>
+                    <p class="text-muted text-center w-100 font-weight-bold">Already Registered? 
+                        <a class="text-primary ml-2" style="cursor: pointer;" onclick="document.getElementById('regPanel').hidden = true; document.getElementById('background').style.filter = 'blur(0px)';">Login</a>
+                    </p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+<script>
+    document.getElementById('regPanel').hidden = true
+    var container = document.getElementById("container")
+    window.addEventListener("resize", resizeListener);
+
+    container.style.marginTop = ((window.innerHeight / 2 ) - 300) + "px";
+    document.getElementById("background").style.height = window.innerHeight + "px"
+
+    function resizeListener() {
+        container.style.marginTop = ((window.innerHeight / 2 ) - 300) + "px";
+        document.getElementById("background").style.height = window.innerHeight + "px"
+    }
+    
+    
+
+</script>
+</body>
+
+</html>

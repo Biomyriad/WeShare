@@ -37,7 +37,7 @@ class User:
     @classmethod
     def get_all(cls):
         query = """
-            SELECT *
+            SELECT id, first_name, last_name, username, email, created_at, updated_at 
             FROM users
         """
         return connectToMySQL(cls.db).query_db(query)
@@ -45,7 +45,7 @@ class User:
     @classmethod
     def get_by_email(cls,email):
         query = """
-            SELECT *
+            SELECT id, first_name, last_name, username, email, created_at, updated_at 
             FROM users
             WHERE email = %(email)s;
         """
@@ -59,7 +59,7 @@ class User:
     @classmethod
     def get_by_id(cls,id):
         query = """
-            SELECT *
+            SELECT id, first_name, last_name, username, email, created_at, updated_at 
             FROM users
             WHERE users.id = %(id)s;
         """
@@ -69,6 +69,23 @@ class User:
         if len(result) < 1:
             return False
         return cls(result[0])
+
+    @classmethod
+    def get_by_email_with_hash(cls, email):
+        query = f"""
+            SELECT * 
+            FROM users 
+            WHERE email=%(email)s;
+        """
+        data = { "email": email }
+        results = connectToMySQL(cls.db).query_db(query,data)
+
+        if len(results) > 0:
+            item = cls(results[0])
+        else:
+            return False
+
+        return item
 
 
 #######################################################
@@ -92,8 +109,6 @@ class User:
             UPDATE users 
             SET first_name=%(first_name)s, 
             last_name = %(last_name)s,
-            username = %(username)s,
-            email = %(email)s,
             updated_at=NOW() 
             WHERE id=%(id)s;
         """
@@ -166,38 +181,34 @@ class User:
 #                  validate login
 #######################################################
     @staticmethod
-    def valid_login(data):
-        is_valid = True
-
-        if data["email"] == "":
-            flash("email is required", "sign_in")
-            is_valid = False
-        if not EMAIL_REGEX.match(data["email"]):
-            flash("invalid email address - sample@email.com", "sign_in")
-            is_valid = False
-
-        if data["password"] == "":
-            flash("password is required", "sign_in")
-            is_valid = False
-        if len(data["password"]) <7:
-            flash("password needs to be 8 character or longer", "sign_in")
-            is_valid = False
+    def validate_login(data):
+        # missing data
+        missing_login_info = False
+        if data['email'] == None or data['email'] == "":
+            flash({"label": "email", "message": "Please enter an email."},"login")
+        if data['password'] == None or data['password'] == "":
+            flash({"label": "password", "message": "Please enter your password."},"login")
+        if missing_login_info:
+            return False
         
-        if is_valid == True:
-            query = "SELECT * FROM users WHERE email = %(email)s;"
-            print(query)
-            results = connectToMySQL(User.db).query_db(query,data)
-            if len(results) <= 0:
-                flash("no account has this email", "sign_in")
-                is_valid=False
+        # invalid info
+        user = User.get_by_email_with_hash(data['email'].lower())
+        if not user:
+            flash({"label": "email", "message": f"No account found for {data['email'].lower()}"},"login")
+            return False
+        if not bcrypt.check_password_hash(user.password, data['password']):
+            flash({"label": "password", "message": "Invalid Password, please try again."},"login")
+            return False
 
-            if len(results) == 1:
-                user = User(results[0])
-                if not bcrypt.check_password_hash(user.password, data["password"]):
-                    flash("password is incorrect", "sign_in")
-                    is_valid=False
+        session_data = {
+                "id": user.id,
+                "first_name": user.first_name,
+                "last_name": user.last_name,
+                "username": user.username,
+                "email": user.email
+            }
 
-        return is_valid
+        return session_data
 
 
 
