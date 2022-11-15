@@ -14,7 +14,7 @@ from flask import render_template, request, redirect, url_for, session, flash
 
 @app.route('/')
 def route_landing():
-    return render_template("partials/login.html")
+    return render_template("pages/userinfo.html")
     #return redirect("/login")  
 
 # # # # # # # # # # #

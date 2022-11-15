@@ -1,0 +1,62 @@
+.contact-form{
+    background-color: hsla(0, 0%, 100%, 0.708) !important;
+    backdrop-filter: saturate(200%) blur(25px);
+    margin-top: 10%;
+    margin-bottom: 5%;
+    width: 50%;
+}
+.contact-form .form-control{
+    border-radius:1rem;
+    margin-top: 5px;
+    margin-bottom: 17px;
+}
+
+
+.file-select-input {
+    padding-left: 20px;
+    padding-right: 10px;
+    width: 200%;
+    background-color: hsla(0, 0%, 100%, 0.708) !important;
+}
+.contact-image{
+    text-align: center;
+}
+.contact-image img{
+    border-radius: 6rem;
+    width: 15%;
+    margin-top: -5%;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #172846;
+}
+
+.file-select {
+    padding: 0%;
+}
+.contact-form form{
+    padding: 14%;
+}
+.contact-form form .row{
+    margin-bottom: -10%;
+}
+.contact-form h3,h4{
+    margin-bottom: 10%;
+    margin-top: -10%;
+    text-align: center;
+    color: #0062cc;
+}
+.form-button{
+    width: 50%;
+    border: none;
+    border-radius: 1rem;
+    padding: 1.5%;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+}
+
+.file-select-input{
+    border-radius: 0px 15px 15px 0px;
+}
