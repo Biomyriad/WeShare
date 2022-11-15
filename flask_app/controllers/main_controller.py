@@ -18,7 +18,6 @@ def route_landing():
 @app.route('/')
 def route_test_reg():
     return render_template("partials/registration.html")
-    #return redirect("/login")  
 
 # # # # # # # # # # #
 #   Error 

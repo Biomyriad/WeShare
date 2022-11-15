@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post_feed.css') }}">
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userinfo.css') }}">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+        <title>Document</title>
+</head>
+<body style="background-color: hsl(218, 41%, 15%);">
+
+<div class="container contact-form">
+    <div class="contact-image">
+        <img src="./static/images/profile.jpg">
+    </div>
+    <form method="post">
+        <h3>Tony Stark</h3>
+        <h4>Email:[useremail]</h4>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <div class="file-select">
+                        <label class="file-select-button form-button" for="upload"><span class="file-select-button-text">Select</span></label>
+                        <input type="file" name="file" id="upload" style="opacity: 0; position: absolute; z-index: -1;" onchange="readURL(this)"/>
+                        <input class="file-select-input" type="text" name="file_name_url" id="newPostFileName" placeholder="File Name..." >
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="first_name" class="form-control" placeholder="Your First Name "  />
+                </div>
+                <div class="form-group">
+                    <input type="text" name="last_name" class="form-control" placeholder="Your Last Name "/>
+                </div>
+                <div class="form-group">
+                    <input type="submit" name="btnSubmit" class="new-form-submit form-button"  />
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <textarea name="txtMsg" class="form-control" placeholder="About Me" style="width: 125%; height: 150px;"></textarea>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+    
+</body>
+</html>
