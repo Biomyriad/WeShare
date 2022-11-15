@@ -14,8 +14,13 @@ valid_login_url = "/dashboard"
 
 @app.route('/logout')
 def route_logout():
-
-    del session["logged_in"]
+    print("logging out ")
+    if 'logged_in' in session:
+        print("logged_in")
+        del session["logged_in"]
+    if 'user' in session:
+        print("user")
+        del session["user"]
 
     return redirect("/") 
 
