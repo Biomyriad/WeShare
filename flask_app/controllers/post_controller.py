@@ -10,9 +10,9 @@ ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
 @app.route('/dashboard')
 def route_dashboard():
-
+    if not 'logged_in' in session: return redirect("/")
+    
     userPosts = UserPosts.get_all()
-
     return render_template("pages/post_feed.html", userPosts=userPosts)
 
 def allowed_file(filename):
@@ -21,9 +21,10 @@ def allowed_file(filename):
 ## API ROUTE!!!
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
-    print("UPLOAD <==================")
-    print(request.form['description'])
-    print(request.form['file_name_url'])
+    if not 'logged_in' in session: return {"errorMessages": {"auth": "unauthorized"}}, 401
+    # print("UPLOAD <==================")
+    # print(request.form['description'])
+    # print(request.form['file_name_url'])
 
     if not request.form['description']:
         return {"errorMessages": {"description": "Must provide a description."}} , 400 #400 Bad Request
@@ -45,7 +46,7 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             data = {
-                "user_id": "1",
+                "user_id": session["user"].id,
                 "description": request.form['description'],
                 "image_path": url_for('static', filename='uploaded_images/' + filename)
             }
