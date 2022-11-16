@@ -32,9 +32,12 @@ img {
     overflow: hidden;
     position: relative;
     margin: auto;
-    background-color: hsla(0, 0%, 100%, 0.708) ;
+    background-color: #4466a2; ;
+    border: 2px solid #4466a2;
     top: 50%;
     transform: translateY(-50%);
+    border-radius: 10px;
+    box-shadow: 0px 6px 13px 1px #2a40648f;
 }
 
 .profile-card header {
@@ -74,10 +77,38 @@ img {
 .profile-card .profile-bio {
     padding: 30px 30px;
     text-align: center;
-    color: #666;
+    color:black;
     font-size: 16px;
 }
 
+.images-container{
+    display: flex ;
+    flex-direction: row;
+    width: fit-content;
+}
+
+.card {
+    justify-content: center;
+    width: 500px;
+    height: 250px;
+    box-sizing: border-box;
+}
+
+.view-port{
+    margin-left: 27px;
+    width: 500px;
+    height: 250px;
+    overflow: hidden;
+    position:relative;
+    top: 50%;
+    bottom: 50%;
+
+}
+
+img{
+    max-width: 100%;
+    height: auto;
+}
 
 
 
