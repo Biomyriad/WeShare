@@ -91,7 +91,8 @@ class UserPosts:
         return cls.run_query(query, data)
 
     @classmethod
-    def delete(cls, data ):
+    def delete(cls, id ):
+        data = { "id": id }
         query = "DELETE FROM posts WHERE id=%(id)s;"
         return cls.run_query( query, data )  
 
