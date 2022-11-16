@@ -14,8 +14,13 @@ valid_login_url = "/dashboard"
 
 @app.route('/logout')
 def route_logout():
-
-    del session["logged_in"]
+    print("logging out ")
+    if 'logged_in' in session:
+        print("logged_in")
+        del session["logged_in"]
+    if 'user' in session:
+        print("user")
+        del session["user"]
 
     return redirect("/") 
 
@@ -35,6 +40,8 @@ def route_login():
                 return redirect('/login')
 
             session['logged_in'] = True
+            #session_data.id = int(session_data.id)
+            print(session_data['id'])
             session['user'] = session_data
             return redirect(valid_login_url) 
 
@@ -58,7 +65,7 @@ def route_login():
 
             session['logged_in'] = True
             session['user'] = {
-                "id": user_id,
+                "id": int(user_id),
                 "first_name": data['first_name'],
                 "last_name": data['last_name'],
                 "username": data['username'],

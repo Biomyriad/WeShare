@@ -6,14 +6,27 @@ from werkzeug.datastructures import  FileStorage
 
 from flask_app.models.post_model import UserPosts
 
-ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
+ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'gif'}
 
 @app.route('/dashboard')
 def route_dashboard():
-
+    if not 'logged_in' in session: return redirect("/")
+    
     userPosts = UserPosts.get_all()
-
     return render_template("pages/post_feed.html", userPosts=userPosts)
+
+
+
+#################################################
+#########  API Routes
+
+@app.route('/post/delete/<int:id>')
+def route_post_delete(id):
+    if not 'logged_in' in session: return redirect("/")
+
+    UserPosts.delete(id)
+
+    return "OK", 200
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -21,9 +34,10 @@ def allowed_file(filename):
 ## API ROUTE!!!
 @app.route('/uploader', methods=['GET', 'POST'])
 def upload_file():
-    print("UPLOAD <==================")
-    print(request.form['description'])
-    print(request.form['file_name_url'])
+    if not 'logged_in' in session: return {"errorMessages": {"auth": "unauthorized"}}, 401
+    # print("UPLOAD <==================")
+    # print(request.form['description'])
+    # print(request.form['file_name_url'])
 
     if not request.form['description']:
         return {"errorMessages": {"description": "Must provide a description."}} , 400 #400 Bad Request
@@ -45,7 +59,7 @@ def upload_file():
             file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 
             data = {
-                "user_id": "1",
+                "user_id": session["user"]['id'],
                 "description": request.form['description'],
                 "image_path": url_for('static', filename='uploaded_images/' + filename)
             }
