@@ -7,9 +7,9 @@ from flask import render_template, request, redirect, url_for, session, flash
 #   Routes 
 # # # # # # # # # # #
 
-@app.route('/')
-def route_landing():
-    return redirect("/login")  
+# @app.route('/')
+# def route_landing():
+#     return redirect("/login")  
 
 # # # # # # # # # # #
 #   Test 
@@ -17,7 +17,7 @@ def route_landing():
 
 @app.route('/')
 def route_test_reg():
-    return render_template("partials/registration.html")
+    return render_template("pages/userdetails.html")
 
 # # # # # # # # # # #
 #   Error 
