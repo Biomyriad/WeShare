@@ -11,12 +11,23 @@
 
             <h3 class="text-center mt-2 mx-auto rounded"></h3>
 
-            <div class="d-flex align-items-center">
+            <div class="d-flex justifty-items-between align-items-center">
                 <div class="searchbar">
                     <input class="search_input" type="text" name="" placeholder="Search...">
                     <a href="#" class="search_icon"><i class="bi bi-search"></i></a>
                 </div>
-                <i style="font-size: 25px; color: #d9d9d9;" class="bi bi-list"></i>
+
+                <a href="/logout"><i class="bi bi-box-arrow-right logout-button" style="font-size: 25px;  padding-right: 7px;"></i></a>
+
+                <!-- <a href=""><i class="bi bi-list list-button" style="font-size: 25px;"></i></a> -->
+
+                <div class="dropdown">
+                    <a href=""><i class="bi bi-list list-button" style="font-size: 25px;"></i></a>
+                    <div class="dropdown-content">
+                    <a href="">Edit Account</a>
+                    </div>
+                </div>
+
                 <!-- <div class="link-wrapper">
                     
                 {% if 'logged_in' in session %}

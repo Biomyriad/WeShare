@@ -60,85 +60,6 @@ body::-webkit-scrollbar-thumb {
     border-radius: 4px;
 }
 
-/* Nav */
-nav {}
-
-.navbar {
-    padding-top: 5px;
-    background-image: linear-gradient(#4466a2, transparent);
-}
-
-.navbar-content {
-    max-width: 1200px;
-    height: 30px;
-}
-
-.navbar-brand {
-    vertical-align: baseline;
-    padding-top: 4px;
-    padding-bottom: 0px;
-}
-
-.nav-logo {
-    height: 50px;
-    transform: scale(0.8) translate(0, -5%);
-    margin-right: 5px;
-}
-
-.nav-logo-text {
-    display: inline-block;
-    padding-top: 4px;
-}
-
-/* Search Bar */
-.searchbar {
-    margin-right: 10px;
-    /* background-color: #353b48; */
-    background-color: transparent;
-    border-radius: 30px;
-    transition: background-color 1.5s linear;
-}
-
-.search_input {
-    color: #d9d9d9;
-    border: 0;
-    outline: 0;
-    background: none;
-    width: 0;
-    caret-color: transparent;
-    line-height: 15px;
-    transition: width 0.4s linear;
-}
-
-.search_icon {
-    height: 25px;
-    width: 25px;
-    font-size: 16px;
-    float: right;
-    display: flex;
-    justify-content: center;
-    border-radius: 50%;
-    color: #d9d9d9;
-    text-decoration: none;
-}
-
-.searchbar:hover {
-    background: #353b48;
-    transition: background-color 0.4s linear;
-}
-
-.searchbar:hover>.search_input {
-    padding: 0 10px;
-    width: 200px;
-    caret-color: #d9d9d9;
-    transition: width 0.4s linear;
-}
-
-.searchbar:hover>.search_icon {
-    background: #233dff;
-    color: #d9d9d9;
-}
-
 /* Page Column */
 .feed-column {
     width: 500px;
@@ -208,12 +129,30 @@ nav {}
     margin: 0 auto;
 }
 
+.post-username {
+    color: #d9d9d9;
+    text-decoration: none;
+}
+
+.post-username:hover {
+    color: #233dff;
+    text-decoration: underline;
+    transition: color 0.2s linear;
+}
+
 .post-description {
 
     padding: 10px;
-    margin: 10px auto;
+    margin: 10px auto 0px;
     color: #d9d9d9;
     font-size: 12px;
+}
+
+.post-actions {
+    display: flex;
+    justify-content: space-between;
+    margin: 0px auto 10px;
+    padding: 0px 10px;
 }
 
 /* Add New Post Button */
