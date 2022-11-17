@@ -53,6 +53,9 @@ def route_login():
             data['username'] = request.form['username']
             data['email'] = request.form['email'].lower()
 
+            print("VALID ")
+            print(User.valid_register(request.form))
+
             if not User.valid_register(request.form):
                 # set a temp session variable so that page will display registration on load
                 #   - session variable will be removed in page jinja onload

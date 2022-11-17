@@ -5,105 +5,58 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/resets.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/post_feed.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/userdetails.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/nav.css') }}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>User Details</title>
 </head>
 
-<body style="background-color: hsl(218, 41%, 15%);">
+<body class="mx-auto" style="background-color: hsl(218, 41%, 15%);">
 
-    <aside class="profile-card">
+{% include "partials/nav.html" %}
 
-        <header>
+    <div class="body">
+        <aside class="profile-card">
+            <header>
+                <img src="/static/images/profile.jpg">
 
-            <!-- here’s the avatar -->
+                <!-- the username -->
+                <h1>{{user.first_name}} {{user.last_name}}</h1>
 
-                <img src="./static/images/profile.jpg">
+                <!-- iser name and emails -->
+                <h2>{{user.email}}</h2>
+                <h2>Username: {{user.username}}</h2>
+                <h2>About Me:</h2> 
+                <p style="padding: 0px 60px;">{{user.about_me}}</p>                
+            </header>
+             
+        </aside>
 
-            <!-- the username -->
-            <h1>Tony Stark</h1>
 
-            <!-- iser name and emails -->
-            <h2>tony@info.com</h2>
-            <h2>Username:Stark1</h2>
+        <div class="feed-column mx-auto mt-5" id="post_feed">
 
-        </header>
-
-        <!-- bio -->
-        <div class="profile-bio">
-
-            <p>Interested in creating nature photography.Love outdoor activitis and love to meet new people</p>
-        <div class="view-port">
-            <div class="images-container">
-                <div class="card"><img src="./static/images/1.jpg"></div>
-                <div class="card"><img src="./static/images/2.jpg"></div>
-                <div class="card"><img src="./static/images/4.jpg"></div>
-
-            </div>
-        </div>
+            {% for post in userPosts %}
+                {% include "partials/post.html" %}
+            {% endfor %} 
 
         </div>
-        <button id="next">Next</button>
-        <button id="prev">Prev</button>
+
+    </div>
 
 
-    </aside>
+ 
+
+
+
+
+
+
+
     <script>
-        const next = document.getElementById('next');
-        const prev = document.getElementById('prev');
-        const images = document.querySelector('.images-container');
-
-        const first_card_clone = images.children[0].cloneNode(true);
-        const last_card_clone = images.children[images.children.length-1].cloneNode(true);
-
-        images.insertBefore(last_card_clone,images.children[0]);
-        images.appendChild(first_card_clone);
-
-        images.style.transitionDuration = "0.0s"
-        images.style.transform = `translate(-500}px)`;
-        
-
-        let current_card = 1;
-
-        next.addEventListener('click',() => {
-            if(current_card < images.children.length - 1) {
-                current_card ++;
-        
-                images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${current_card * 500}px)`;
-                if(current_card === images.children.length - 1){
-                    setTimeout(() => {
-                    images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-$500px)`;
-                    current_card = 1;
-                    });
-
-                }
-
-            } else {
-                return;
-            }
-        });
-        prev.addEventListener('click',() => {
-            if(current_card > 0) {
-                current_card --;
-        
-                images.style.transitionDuration = "0.5s";
-                images.style.transform = `translate(-${current_card * 500}px)`;
-                if(current_card === 0){
-                    setTimeout(() => {
-                    images.style.transitionDuration = "0.0s";
-                    images.style.transform = `translate(-${(images.children.length - 2)*500}px)`;
-                    current_card = images.children.length - 2;
-                    });
-
-                }
-
-            } else{
-                return;
-            }
-        });
 
 
     </script>

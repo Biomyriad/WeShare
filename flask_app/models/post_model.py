@@ -34,6 +34,7 @@ class UserPosts:
                 "last_name": results[0]['last_name'],
                 "username": results[0]['username'],
                 "email": results[0]['email'],
+                "about_me": results[0]['about_me'],
                 "password": "",
                 "created_at": results[0]['users.created_at'],
                 "updated_at": results[0]['users.updated_at']
@@ -44,7 +45,7 @@ class UserPosts:
     @classmethod
     def get_all(cls):
         query = f"""
-            SELECT posts.*, users.id, users.first_name, users.last_name, users.username, users.email, users.created_at, users.updated_at
+            SELECT posts.*, users.id, users.first_name, users.last_name, users.username, users.email, users.about_me, users.created_at, users.updated_at
             FROM posts
             JOIN users ON users.id = posts.user_id
             ORDER BY posts.created_at DESC;
@@ -63,13 +64,50 @@ class UserPosts:
                 "last_name": post['last_name'],
                 "username": post['username'],
                 "email": post['email'],
+                "about_me": post['about_me'],
                 "password": "",
                 "created_at": post['users.created_at'],
                 "updated_at": post['users.updated_at']
             })
             posts.append( item )
             
-        return posts          
+        return posts     
+
+    @classmethod
+    def get_by_user_id(cls,id):
+        query = f"""
+            SELECT posts.*, users.id, users.first_name, users.last_name, users.username, users.email, users.about_me, users.created_at, users.updated_at
+            FROM posts
+            JOIN users ON users.id = posts.user_id
+            where posts.user_id = %(id)s
+            ORDER BY posts.created_at DESC;
+        """
+        data = { "id": id }
+        results = cls.run_query(query, data)
+        print(results)
+
+        if results == False:
+            return []
+        if not len(results) > 0:
+            return []
+
+        posts = []
+        for post in results:
+            item = cls(post)
+            item.user = User({
+                "id": post['users.id'],
+                "first_name": post['first_name'],
+                "last_name": post['last_name'],
+                "username": post['username'],
+                "email": post['email'],
+                "about_me": post['about_me'],
+                "password": "",
+                "created_at": post['users.created_at'],
+                "updated_at": post['users.updated_at']
+            })
+            posts.append( item )
+            
+        return posts             
 
     @classmethod
     def save(cls, data ):

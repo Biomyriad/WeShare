@@ -268,3 +268,6 @@ body::-webkit-scrollbar-thumb {
 
 }
 
+.validation {
+    color:red;
+}
