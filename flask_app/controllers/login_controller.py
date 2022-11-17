@@ -63,7 +63,7 @@ def route_login():
                 flash(data, "registration_form_data")
                 return redirect('/login')
 
-            data["password"] = bcrypt.generate_password_hash(request.form['password'])+
+            data["password"] = bcrypt.generate_password_hash(request.form['password'])
             data['about_me'] = ""
             user_id = User.save(data)
 
