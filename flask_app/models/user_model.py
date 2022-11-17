@@ -15,6 +15,7 @@ class User:
         self.last_name = data["last_name"]
         self.username = data["username"]
         self.email = data["email"]
+        self.about_me = data["about_me"]
         self.password = data["password"]
         self.created_at = data["created_at"]
         self.updated_at = data["updated_at"]
@@ -34,40 +35,43 @@ class User:
 #######################################################
 #                       get(s)
 #######################################################
-    @classmethod
-    def get_all(cls):
-        query = """
-            SELECT id, first_name, last_name, username, email, created_at, updated_at 
-            FROM users
-        """
-        return connectToMySQL(cls.db).query_db(query)
 
     @classmethod
-    def get_by_email(cls,email):
+    def get_by_username(cls,username):
         query = """
-            SELECT id, first_name, last_name, username, email, created_at, updated_at 
+            SELECT id, first_name, last_name, username, email, about_me, created_at, updated_at 
             FROM users
-            WHERE email = %(email)s;
+            WHERE username = %(username)s;
         """
-        data = {"email" : email}
+        data = {"username" : username}
         result = connectToMySQL(cls.db).query_db(query,data)
+        print(result)
+        
         # Didn't find a matching user
+        if result == False:
+            return []
         if len(result) < 1:
             return False
+
+        result[0]['password'] = ""
         return cls(result[0])
 
     @classmethod
     def get_by_id(cls,id):
         query = """
-            SELECT id, first_name, last_name, username, email, created_at, updated_at 
+            SELECT id, first_name, last_name, username, email, about_me, created_at, updated_at 
             FROM users
             WHERE users.id = %(id)s;
         """
         data = {"id" : id}
         result = connectToMySQL(cls.db).query_db(query,data)
+        print(result)
         # Didn't find a matching user
+        if result == False:
+            return []
         if len(result) < 1:
             return False
+        result[0]['password'] = ""
         return cls(result[0])
 
     @classmethod
@@ -79,7 +83,9 @@ class User:
         """
         data = { "email": email }
         results = connectToMySQL(cls.db).query_db(query,data)
-
+        
+        if results == False:
+            return []
         if len(results) > 0:
             item = cls(results[0])
         else:
@@ -109,6 +115,8 @@ class User:
             UPDATE users 
             SET first_name=%(first_name)s, 
             last_name = %(last_name)s,
+            username = %(username)s,
+            about_me = %(about_me)s,
             updated_at=NOW() 
             WHERE id=%(id)s;
         """
@@ -125,45 +133,45 @@ class User:
         # current validation is just for length or empty
 
         if data["first_name"] == "":
-            flash("first name is required", "register")
+            flash({"label": "first_name", "message": "First name is required"}, "register")
             is_valid = False
         if len(data["first_name"]) <=2:
-            flash("first name needs to be longer than 2", "register")
+            flash({"label": "first_name", "message": "First name must be greater than 2 letters."},"register")
             is_valid = False
 
         if data["last_name"] == "":
-            flash("last name is required", "register")
+            flash({"label": "last_name", "message": "Last name is required"}, "register")
             is_valid = False
         if len(data["last_name"]) <=2:
-            flash("last name needs to be longer than 2", "register")
+            flash({"label": "last_name", "message": "Last name must be greater than 2 letters."},"register")
             is_valid = False
 
         if data["username"] == "":
-            flash("username name is required", "register")
+            flash({"label": "username", "message": "Username name is required"}, "register")
             is_valid = False
         if len(data["username"]) <=2:
-            flash("username name needs to be longer than 2", "register")
+            flash({"label": "Username", "message": "Must enter an email address."},"register")
             is_valid = False
 
         if data["email"] == "":
-            flash("email is required", "register")
+            flash({"label": "email", "message": "Email is required"}, "register")
             is_valid = False
         if not EMAIL_REGEX.match(data["email"]):
-            flash("invalid email address - sample@email.com", "register")
+            flash({"label": "email", "message": "Must be a valid email."},"register")
             is_valid = False
 
         if data["password"] == "":
-            flash("password is required", "register")
+            flash({"label": "password", "message": "Must enter a password."},"register")
             is_valid = False
         if len(data["password"]) <8:
-            flash("password needs to be 8 characters or longer", "register")
+            flash({"label": "password", "message": "Password must be greater then 8"},"register")
             is_valid = False
 
         if data["confirm"] == "":
-            flash("confirm is required", "register")
+            flash({"label": "confirm_password", "message": "Must enter a confirm password."},"register")
             is_valid = False
         if data["password"] != (data["confirm"]):
-            flash("passwords do not match", "register")
+            flash({"label": "confirm_password", "message": "Passwords do not match."},"register")
             is_valid = False
 
         if is_valid == True:
@@ -171,7 +179,7 @@ class User:
             print(query)
             results = connectToMySQL(User.db).query_db(query,data)
             if len(results) >= 1:
-                flash("email is already in use.", "register")
+                flash({"label": "email", "message": "email is already in use."}, "register")
                 is_valid=False
 
         return is_valid
@@ -211,24 +219,31 @@ class User:
         return session_data
 
 
+    @staticmethod
+    def valid_user_info(data):
+        is_valid = True
 
+        if data["first_name"] == "":
+            flash({"label": "first_name", "message": "first name is required"}, "register")
+            is_valid = False
+        if len(data["first_name"]) <=2:
+            flash({"label": "first_name", "message": "First name must be greater than 2 letters."},"register")
+            is_valid = False
 
+        if data["last_name"] == "":
+            flash({"label": "last_name", "message": "last name is required"}, "register")
+            is_valid = False
+        if len(data["last_name"]) <=2:
+            flash({"label": "last_name", "message": "Last name must be greater than 2 letters."},"register")
+            is_valid = False
 
+        if data["username"] == "":
+            flash({"label": "username", "message": "username name is required"}, "register")
+            is_valid = False
+        if len(data["username"]) <=2:
+            flash({"label": "username", "message": "Must enter an email address."},"register")
+            is_valid = False
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+        return is_valid
 
 

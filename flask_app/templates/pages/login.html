@@ -13,6 +13,19 @@
 </head>
 
 <body >
+
+    {% if get_flashed_messages(category_filter=['login']) %}
+        {% set login_messages = get_flashed_messages(category_filter=['login']) %}
+    {% endif %}
+    {% if get_flashed_messages(category_filter=['register']) %}
+        {% set register_messages = get_flashed_messages(category_filter=['register']) %}
+    {% endif %}
+
+    {% set reg_form_data = "" %}
+    {% if get_flashed_messages(category_filter=['registration_form_data']) %}
+        {% set reg_form_data = get_flashed_messages(category_filter=['registration_form_data']) | index(0) %}
+    {% endif %}
+
     <div class="background-radial-gradient " id="background">
         <div class="container px-4 py-5 px-md-5 text-center text-lg-start " >
             <div class="row gx-lg-5 align-items-center mb-5" id="container">
@@ -32,11 +45,13 @@
                                 <!-- Email input -->
                                 <div class="form-outline mb-4">
                                     <input type="email" class="form-control" name="email"/>
+                                    <p class="validation" {{ login_messages | get_validation_visibility("email")}}>{{ login_messages | get_validation_message("email") }}</p>
                                     <label class="form-label">Email Adress</label>
                                 </div>
                             <!-- Password input -->
                                 <div class="form-outline mb-4">
                                     <input type="password" class="form-control" name="password"/>
+                                    <p class="validation" {{ login_messages | get_validation_visibility("password")}}>{{ login_messages | get_validation_message("password") }}</p>
                                     <label class="form-label">Password</label>
                                 </div>
 
@@ -62,13 +77,15 @@
                 <div class="row">
                     <div class="col-md-6 mb-4">
                         <div class="form-outline">
-                            <input type="text" class="form-control" name="first_name"/>
+                            <input type="text" class="form-control" name="first_name" value='{{ reg_form_data["first_name"]}}'/>
+                            <p class="validation" {{ register_messages | get_validation_visibility("first_name")}}>{{ register_messages | get_validation_message("first_name") }}</p>
                             <label class="form-label">First name</label>
                         </div>
                     </div>
                     <div class="col-md-6 mb-4">
                         <div class="form-outline">
-                            <input type="text" class="form-control" name="last_name"/>
+                            <input type="text" class="form-control" name="last_name" value='{{ reg_form_data["last_name"]}}'/>
+                            <p class="validation" {{ register_messages | get_validation_visibility("last_name")}}>{{ register_messages | get_validation_message("last_name") }}</p>
                             <label class="form-label">Last name</label>
                         </div>
                     </div>
@@ -76,13 +93,15 @@
     
                 <!-- Email input -->
                 <div class="form-outline mb-4">
-                    <input type="email" class="form-control" name="email"/>
-                    <label class="form-label">Email Adress</label>
+                    <input type="email" class="form-control" name="email" value='{{ reg_form_data["email"]}}'/>
+                    <p class="validation" {{ register_messages | get_validation_visibility("email")}}>{{ register_messages | get_validation_message("email") }}</p>
+                    <label class="form-label">Email Address</label>
                 </div>
     
                 <!-- Username input -->
                 <div class="form-outline mb-4">
-                    <input type="username" class="form-control" name="username"/>
+                    <input type="username" class="form-control" name="username" value='{{ reg_form_data["username"]}}'/>
+                    <p class="validation" {{ register_messages | get_validation_visibility("username")}}>{{ register_messages | get_validation_message("username") }}</p>
                     <label class="form-label">User Name</label>
                 </div>
     
@@ -90,11 +109,13 @@
                 <!-- Password input -->
                 <div class="form-outline mb-4">
                     <input type="password" class="form-control" name="password"/>
+                    <p class="validation" {{ register_messages | get_validation_visibility("password")}}>{{ register_messages | get_validation_message("password") }}</p>
                     <label class="form-label">Password</label>
                 </div>
 
                 <div class="form-outline mb-4">
                     <input type="password" class="form-control" name="confirm"/>
+                    <p class="validation" {{ register_messages | get_validation_visibility("confirm_password")}}>{{ register_messages | get_validation_message("confirm_password") }}</p>
                     <label class="form-label">Confirm Password</label>
                 </div>
     
@@ -112,7 +133,14 @@
     </div>
 
 <script>
-    document.getElementById('regPanel').hidden = true
+
+    {% if 'show_registration' in session and session['show_registration'] == True %}
+        {% set x = session.pop('show_registration') %}
+        document.getElementById('regPanel').hidden = false
+    {% else %}
+        document.getElementById('regPanel').hidden = true
+    {% endif %}
+
     var container = document.getElementById("container")
     window.addEventListener("resize", resizeListener);
 

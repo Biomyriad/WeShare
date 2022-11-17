@@ -2,6 +2,22 @@
     --background-height: 650px;
 }
 
+/* Scroll Bar */
+body::-webkit-scrollbar {
+    width: 0.8em;
+}
+
+body::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #172846;
+}
+
+body::-webkit-scrollbar-thumb {
+    background-color: #4466a2;
+    border-radius: 15px;
+    background-image: linear-gradient(to right, #4466a2, #20314e);
+}
+
 #container {
     margin-top: 0px;
 }
@@ -56,3 +72,7 @@
     z-index: 100;
 }
 
+.validation {
+    color: red;
+    margin-bottom: 0px;
+}

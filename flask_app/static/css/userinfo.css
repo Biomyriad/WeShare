@@ -1,5 +1,7 @@
+
+
 .contact-form{
-    background-color: hsla(0, 0%, 100%, 0.708) !important;
+    background-color: #ffffffb5 !important;
     backdrop-filter: saturate(200%) blur(25px);
     margin-top: 10%;
     margin-bottom: 5%;
@@ -20,7 +22,7 @@
     padding-left: 10px;
     padding-right: 10px;
     width: 200%;
-    background-color: hsla(0, 0%, 100%, 0.708) !important;
+    background-color: #ffffffb5 !important;
 }
 .contact-image{
     text-align: center;
@@ -57,10 +59,34 @@ body::-webkit-scrollbar-track {
     border-radius: 1rem;
     padding: 1.5%;
     font-weight: 600;
-    color: #fff;
+    color: #d9d9d9;
+    background-color: #4466a2;
     cursor: pointer;
 }
 
 .file-select-input{
     border-radius: 0px 15px 15px 0px;
+}
+
+.cancel-btn:hover, .new-form-submit:hover {
+    color: #d9d9d9;
+    background-color: #0062cc;
+    transition: background-color 0.15s linear;
+}
+
+.cancel-btn {
+    text-decoration: none; 
+    padding: 7px 60px; 
+}
+
+.form-button:active:hover {
+    background-color: #353b48;
+    transition: background-color 0.15s linear;
+}
+
+.validation {
+    padding: 0px;
+    color: red;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }

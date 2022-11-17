@@ -53,20 +53,20 @@ nav {}
 }
 
 .dropdown:hover .dropdown-content {
-display: block;
+    display: block;
 }
 
 .dropdown-content {
-display: none;
-position: absolute;
-right: 0px;
-color: #d9d9d9;
-background-color: #353b48;
-border-radius: 4px;
-min-width: 160px;
-box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-padding: 12px 16px;
-z-index: 1;
+    display: none;
+    position: absolute;
+    right: 0px;
+    color: #d9d9d9;
+    background-color: #353b48;
+    border-radius: 4px;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
+    z-index: 1;
 }
 
 .dropdown-content a {
